@@ -42,15 +42,15 @@ Pen data has priority over Express key data.
 
 ## 2.3. Express key (Tablet button on the left side) data
 
-| Byte  |    0 | 1   | 2   | 3   |
-| :---- | ---: | :-- | :-- | :-- |
-| Value | 0x03 | Key | Key | Key |
+| Byte  |    0 | 1          | 2          | 3          |
+| :---- | ---: | :--------- | :--------- | :--------- |
+| Value | 0x03 | Key-Status | Key-Status | Key-Status |
 
-**Satus**  
+**Key-Satus**  
 
-| Bit    |    7 |                      6 |  5 |                          4 |  3 |  2 |                     1 |                             0 |
-| :----- | ---: | ---------------------: | -: | -------------------------: | -: | -: | --------------------: | ----------------------------: |
-| Assign |    1 | In Enable Area(True=1) |  0 | Out of Enable Area(True=1) |  0 |  0 | Button Stylus(True=1) | Button Touch(Contact)(True=1) |
+| Bit    | 7      | 6      | 5      | 4      | 3      | 2      | 1      | 0      |
+| :---   | ---:   | ---:   | ---:   | ---:   | ---:   | ---:   | ---:   | ---:   |
+| Assign | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. |
 
 Pen data interrupts and overwrites Express key data.
 
