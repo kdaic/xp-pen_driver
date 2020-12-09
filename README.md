@@ -1,7 +1,7 @@
 xp-pen_driver
 ===
 
-This is XP-PEN Pentablet driver on Ubuntu.
+This is XP-PEN Pentablet driver for Ubuntu Linux.
 
 # 1. Environment
 
@@ -21,11 +21,14 @@ Ubuntu 18.04
 
 | model     | VendorID | ProductID | InterfaceNumber | EndpointAddress | wMaxPacketSize |
 | :-------- | -------: | --------: | --------------: |---------------: | -------------: |
-| Artist 12 |   0x28bd |    0x080a |               0 |            0x81 |         0x000a |
-|           |          |           |               1 |            0x82 |         0x0008 |
+| Artist 12 |   0x28bd |    0x080a |               0 |            0x82 |         0x0008 |
+|           |          |           |               1 |            0x81 |         0x000a |
 |           |          |           |               2 |            0x83 |         0x000a |
 
-Pen data has priority over Express key data.
+From [analyzing usb data (Pen data & Express key data)](#4-analyze-pen-data),  
+The signal of EndpointAddress 0x83 corresponds to Pen data & Express key data,  
+
+Pen data has priority over Express key data.  
 
 ## 2.2. Pen data
 
@@ -56,31 +59,32 @@ Pen data interrupts and overwrites Express key data.
 
 &nbsp;
 
-# 3. Dependency
+# 3. Dependency of driver
 
 libusb-1.0-0
 
+&nbsp;
 
-# 4. Analyze Pen data
+# 4. Analyze USB data of Pentablet
 
-## 4.1. Dependency
+## 4.1. Dependency for test
 
-``` sh
+libusb-1.0-0-dev package is needed.
+
+```
 $ sudo apt-get install libusb-1.0-0-dev
 
 ```
 
 ## 4.2. Make
 
-``` sh
+```
 $ make test
 ```
 
-make ``test``.
-
 ## 4.3. How to test
 
-``` sh
+```
 $ sudo ./test
 loop start (Ctrl+C to exit)
 07 90 30 1d d0 2b 00 00 
@@ -91,7 +95,7 @@ loop start (Ctrl+C to exit)
 
 If data-values are not displayed,  
 Fix ``INTF_NUM``, ``EP_ADDR``, ``MAX_PACKET_SIZE`` in test.c.  
-Also See lsusb command.  
+Also See command  ``lsusb`` & ``lsusb -d 28bd:080a -v`` result.  
 
 &nbsp;
 
@@ -99,7 +103,7 @@ Also See lsusb command.
 
 ## 5.1. Make
 
-``` sh
+```
 $ make
 ```
 
@@ -109,23 +113,25 @@ make ``pentab.ko``, ``detach.ko``.
 
 register pentab.ko into kernel.
 
-``` sh
+```
 $ sudo make install
 ```
 
-Try ``$ dmesg`` and check whether pentab recognition is displayed.
+Try ``dmesg`` and check whether the pentablet is recognized as usb device.
 
 ## 5.3. Uninstall
 
-``` sh
+```
 $ sudo make uninstall
 ```
 
 pentab.ko is removed from kernel.
 
+&nbsp;
+
 # 6. Make Claen
 
-``` sh
+```
 $ make clean
 ```
 pentab.ko, detach, test are removed.
