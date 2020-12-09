@@ -1,12 +1,19 @@
 xp-pen_driver
 ===
 
-This is XP-Pen Pentablet driver on Ubuntu.
+This is XP-PEN Pentablet driver on Ubuntu.
 
 # 1. Environment
 
+## 1.1. Target model of Pentablet
+
+Artist 12
+
+## 1.2. Target OS
+
 Ubuntu 18.04
 
+&nbsp;
 
 # 2. Device data
 
@@ -54,7 +61,7 @@ Pen data interrupts and overwrites Express key data.
 libusb-1.0-0
 
 
-# 4. Analyze serial input data
+# 4. Analyze Pen data
 
 ## 4.1. Dependency
 
@@ -63,11 +70,13 @@ $ sudo apt-get install libusb-1.0-0-dev
 
 ```
 
-## 4.2. Compile
+## 4.2. Make
 
 ``` sh
 $ make test
 ```
+
+make ``test``.
 
 ## 4.3. How to test
 
@@ -80,8 +89,46 @@ loop start (Ctrl+C to exit)
 ...
 ```
 
-If data-values are not displayed, Fix ``INTF_NUM``, ``EP_ADDR``, ``MAX_PACKET_SIZE`` at test.c.  
-See lsusb command.  
+If data-values are not displayed,  
+Fix ``INTF_NUM``, ``EP_ADDR``, ``MAX_PACKET_SIZE`` in test.c.  
+Also See lsusb command.  
+
+&nbsp;
+
+# 5. Make & Install driver
+
+## 5.1. Make
+
+``` sh
+$ make
+```
+
+make ``pentab.ko``, ``detach.ko``.
+
+## 5.2. Install
+
+register pentab.ko into kernel.
+
+``` sh
+$ sudo make install
+```
+
+Try ``$ dmesg`` and check whether pentab recognition is displayed.
+
+## 5.3. Uninstall
+
+``` sh
+$ sudo make uninstall
+```
+
+pentab.ko is removed from kernel.
+
+# 6. Make Claen
+
+``` sh
+$ make clean
+```
+pentab.ko, detach, test are removed.
 
 &nbsp;
 

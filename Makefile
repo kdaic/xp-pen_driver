@@ -1,10 +1,15 @@
 KVERSION = $(shell uname -r)
 obj-m := pentab.o
 
-all: compile_title modules detach
+all: modules detach
 
-compile_title:
-	@echo "  make test : complie test exec file for analyzing."
+help:
+	@echo "Help"
+	@echo "  make           : compile pentab.ko kernel module and detach command file."
+	@echo "  make install   : register pentab.ko into kernel"
+	@echo "  make uninstall : remove pentab.ko from kernel"
+	@echo "  make test      : complie test application for analyzing."
+	@echo "  make clean     : remove pentab.ko, detach, test"
 
 modules:
 	make -C /lib/modules/$(KVERSION)/build M=$(PWD) modules
@@ -12,15 +17,15 @@ modules:
 detach:
 	gcc detach.c -o detach `pkg-config libusb-1.0 --libs --cflags`
 
+install:
+	insmod pentab.ko
+
+uninstall:
+	rmmod pentab
+
 # apt-get install libusb-1.0-0-dev
 test:
 	gcc test.c -o test `pkg-config libusb-1.0 --libs --cflags`
-
-install:
-	sudo insmod pentab.ko
-
-uninstall:
-	sudo rmmod pentab
 
 clean:
 	make -C /lib/modules/$(KVERSION)/build M=$(PWD) clean
