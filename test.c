@@ -20,6 +20,8 @@
 
 int Flag = 1;
 
+const unsigned int timeout = 100;
+
 void signal_handler(int signum)
 {
 	Flag = 0;
@@ -69,7 +71,7 @@ int main()
   printf("loop start (Ctrl+C to exit)\n");
 
   while (Flag) {
-    r = libusb_interrupt_transfer(handle, EP_ADDR, buffer, sizeof(buffer), &transferred, 100);
+    r = libusb_interrupt_transfer(handle, EP_ADDR, buffer, sizeof(buffer), &transferred, timeout);
     switch (r) {
       case 0:
         for (int i = 0; i < transferred; i++)
