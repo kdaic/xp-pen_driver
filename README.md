@@ -30,7 +30,7 @@ The signal of EndpointAddress 0x83 corresponds to Pen data & Express key data,
 
 Pen data has priority over Express key data.  
 
-## 2.2. Pen data
+## 2.2. Pen data format
 
 | Byte  |    0 |      1 |    2 |    3 |    4 |    5 |              6 |              7 |
 | :---- | ---: | -----: | ---: | ---: | ---: | ---: | -------------: | -------------: |
@@ -43,7 +43,7 @@ Pen data has priority over Express key data.
 | Assign |    1 | In Enable Area(True=1) |  0 | Out of Enable Area(True=1) |  0 |  0 | Button Stylus(True=1) | Button Touch(Contact)(True=1) |
 
 
-## 2.3. Express key (Tablet button on the left side) data
+## 2.3. Express key (Tablet button on the left side) data format
 
 | Byte  |    0 | 1          | 2          | 3          |
 | :---- | ---: | :--------- | :--------- | :--------- |
@@ -55,7 +55,7 @@ Pen data has priority over Express key data.
 | :---   | ---:   | ---:   | ---:   | ---:   | ---:   | ---:   | ---:   | ---:   |
 | Assign | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. | T.B.D. |
 
-Pen data interrupts and overwrites Express key data.
+Pen data signal interrupts and overwrites Express key data.
 
 &nbsp;
 
@@ -107,7 +107,7 @@ Also See command  ``lsusb`` & ``lsusb -d 28bd:080a -v`` result.
 $ make
 ```
 
-make ``pentab.ko``, ``detach.ko``.
+make ``pentab.ko``, ``detach``.
 
 ## 5.2. Install
 
@@ -129,7 +129,7 @@ pentab.ko is removed from kernel.
 
 &nbsp;
 
-# 6. Make Claen
+# 5.4. Make Claen
 
 ```
 $ make clean

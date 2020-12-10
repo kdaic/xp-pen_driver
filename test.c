@@ -27,64 +27,64 @@ void signal_handler(int signum)
 
 int main()
 {
-	uint8_t buffer[MAX_PACKET_SIZE];
-	int transferred;
-	int r;
+  uint8_t buffer[MAX_PACKET_SIZE];
+  int transferred;
+  int r;
 
-	r = libusb_init(NULL);
-	if (r < 0) {
-		printf("libusb_init() failed: %s\n", libusb_error_name(r));
-		return 0;
-	}
+  r = libusb_init(NULL);
+  if (r < 0) {
+    printf("libusb_init() failed: %s\n", libusb_error_name(r));
+    return 0;
+  }
 
-	libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
-	if (handle == NULL) {
-		printf("libusb_open_device_with_vid_pid() failed: %s\n", libusb_error_name(r));
+  libusb_device_handle *handle = libusb_open_device_with_vid_pid(NULL, VID, PID);
+  if (handle == NULL) {
+    printf("libusb_open_device_with_vid_pid() failed: %s\n", libusb_error_name(r));
     /* exit */
     libusb_exit(NULL);
-	}
+  }
 
-	r = libusb_set_auto_detach_kernel_driver(handle, TRUE);
-	if (r != LIBUSB_SUCCESS) {
-		printf("libusb_set_auto_detach_kernel_driver() failed: %s\n", libusb_error_name(r));
+  r = libusb_set_auto_detach_kernel_driver(handle, TRUE);
+  if (r != LIBUSB_SUCCESS) {
+    printf("libusb_set_auto_detach_kernel_driver() failed: %s\n", libusb_error_name(r));
     /* exit */
     libusb_exit(NULL);
-	}
+  }
 
-	libusb_device *device = libusb_get_device(handle);
+  libusb_device *device = libusb_get_device(handle);
 
-	r = libusb_claim_interface(handle, INTF_NUM);
-	if (r != 0) {
-		printf("libusb_claim_interface() failed: %s\n", libusb_error_name(r));
+  r = libusb_claim_interface(handle, INTF_NUM);
+  if (r != 0) {
+    printf("libusb_claim_interface() failed: %s\n", libusb_error_name(r));
     /* close */
     libusb_close(handle);
-	}
+  }
 
-	if(signal(SIGINT, signal_handler) == SIG_ERR) {
-		printf("singal() Failed\n");
+  if(signal(SIGINT, signal_handler) == SIG_ERR) {
+    printf("singal() Failed\n");
     /* close */
     libusb_close(handle);
-	}
+  }
 
-	printf("loop start (Ctrl+C to exit)\n");
+  printf("loop start (Ctrl+C to exit)\n");
 
-	while (Flag) {
-		r = libusb_interrupt_transfer(handle, EP_ADDR, buffer, sizeof(buffer), &transferred, 100);
-		switch (r) {
-			case 0:
-				for (int i = 0; i < transferred; i++)
-					printf("%02x ", buffer[i]);
-				printf("\n");
-				break;
-			case LIBUSB_ERROR_TIMEOUT:
-				break;
-			default:
-				printf("libusb_interrupt_transfer() failed: %s\n", libusb_error_name(r));
-				/* release; */
+  while (Flag) {
+    r = libusb_interrupt_transfer(handle, EP_ADDR, buffer, sizeof(buffer), &transferred, 100);
+    switch (r) {
+      case 0:
+        for (int i = 0; i < transferred; i++)
+          printf("%02x ", buffer[i]);
+        printf("\n");
+        break;
+      case LIBUSB_ERROR_TIMEOUT:
+        break;
+      default:
+        printf("libusb_interrupt_transfer() failed: %s\n", libusb_error_name(r));
+        /* release; */
         libusb_release_interface(handle, INTF_NUM);
-				break;
-		}
-	}
+        break;
+    }
+  }
 
-	return 0;
+  return 0;
 }
