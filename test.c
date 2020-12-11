@@ -10,11 +10,15 @@
 /* 0 or 1 or 2*/
 #define INTF_NUM 1
 /* corresponds to bEndpointAddress ($ lsusb -d PID:VID -v) */
-/* 0x82(INTF_NUM=0) or 0x81(INTF_NUM=1) or 0x83(INTF_NUM=2) */
+/* 0x82(INTF_NUM=0) or 0x81(INTF_NUM=1) or 0x83,0x03(INTF_NUM=2) */
 #define EP_ADDR 0x81
 /* corresponds to wMaxPacketSize ($ lsusb -d PID:VID -v) */
 /* 0x000a(EP_ADDR=0x81,0x83) or 0x0008(EP_ADDR=0x82) */
 #define MAX_PACKET_SIZE 0x000a
+
+/* alternate setting of multiple EndPoint */
+/* such as IN(=1)(0x81,0x82,0x83) or OUT(=1)(0x03) */
+/* #define EP_ALT 0 */
 
 #define TRUE 1
 

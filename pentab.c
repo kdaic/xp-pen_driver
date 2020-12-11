@@ -27,6 +27,8 @@ static void report_handler(u8 *buf, struct input_dev *input)
     input_report_abs(input, ABS_X, get_unaligned_le16(buf + 2));
     input_report_abs(input, ABS_Y, get_unaligned_le16(buf + 4));
     input_report_abs(input, ABS_PRESSURE, get_unaligned_le16(buf + 6));
+    input_report_abs(input, ABS_TILT_X, get_unaligned_le8(buf + 8));
+    input_report_abs(input, ABS_TILT_Y, get_unaligned_le8(buf + 9));
     input_sync(input);
     break;
   }
@@ -89,6 +91,8 @@ static void setup_input_dev(struct input_dev *input, struct usb_interface *intf,
   input_set_abs_params(input, ABS_X, 0, 25400, 0, 0);
   input_set_abs_params(input, ABS_Y, 0, 15875, 0, 0);
   input_set_abs_params(input, ABS_PRESSURE, 0, 8192, 0, 0);
+  input_set_abs_params(input, ABS_TILT_X, -61, 60, 0, 0);
+  input_set_abs_params(input, ABS_TILT_Y, -61, 60, 0, 0);
 }
 
 static int dev_probe(struct usb_interface *intf, const struct usb_device_id *id)
