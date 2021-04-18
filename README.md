@@ -138,10 +138,13 @@ pentab.ko, detach, test are removed.
 
 &nbsp;
 
-## Reference
+# Reference
 
 [memomuteki - Linuxでペンタブモジュールを作成しよう。 by Masaru Hirano(megamuteki)](https://sites.google.com/site/memomuteki/tinylinux/linuxdepentabumojuruwozuochengshiyou)  
 
 [GitHub - digimend-kernel-drivers by Nikolai Kondrashov(spbnick)](https://github.com/DIGImend/digimend-kernel-drivers/issues/351)  
+
+
+&nbsp;
 
 That's all.  

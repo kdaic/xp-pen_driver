@@ -21,7 +21,7 @@ install:
 	insmod pentab.ko
 
 uninstall:
-	rmmod pentab
+	rmmod pentab.ko
 
 # apt-get install libusb-1.0-0-dev
 test:

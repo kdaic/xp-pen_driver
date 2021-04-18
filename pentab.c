@@ -27,8 +27,8 @@ static void report_handler(u8 *buf, struct input_dev *input)
     input_report_abs(input, ABS_X, get_unaligned_le16(buf + 2));
     input_report_abs(input, ABS_Y, get_unaligned_le16(buf + 4));
     input_report_abs(input, ABS_PRESSURE, get_unaligned_le16(buf + 6));
-    input_report_abs(input, ABS_TILT_X, get_unaligned_le8(buf + 8));
-    input_report_abs(input, ABS_TILT_Y, get_unaligned_le8(buf + 9));
+    input_report_abs(input, ABS_TILT_X, get_unaligned(buf + 8));
+    input_report_abs(input, ABS_TILT_Y, get_unaligned(buf + 9));
     input_sync(input);
     break;
   }
